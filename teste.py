@@ -101,7 +101,6 @@ for j in range(num):
 
     #clicar no doc
     pyautogui.moveTo(x1, y1+27)
-    pyautogui.click()
 
     for i in range(4):
         y1 = y1+23
