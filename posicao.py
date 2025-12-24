@@ -1,12 +1,19 @@
 import pyautogui
 import time
 
-time.sleep(5)
+time.sleep(2)
 
-print(pyautogui.position())
-print(pyautogui.size())
+# print(pyautogui.position())
+# print(pyautogui.size())
 # time.sleep(2)
 # pyautogui.moveTo(pyautogui.locateOnScreen('./image/carregando_image.png', confidence= 0.4))
+x, y = pyautogui.locateCenterOnScreen('./image/operacoes_image.png', confidence= 0.8)
+pyautogui.moveTo(x, y)
+pyautogui.moveTo(x + 52, y + 34)
+time.sleep(1)
+x1, y1 = pyautogui.locateCenterOnScreen('./image/cpf_image.png', confidence= 0.6)
+pyautogui.moveTo(x1, y1)
+pyautogui.moveTo(x1, y1 + 40)
 
 #-------- TELA CHEIA ---------
 #SIGAMA

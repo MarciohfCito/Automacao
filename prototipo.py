@@ -126,13 +126,15 @@ posicao_a_nome_S = posicao_i_nome_S
 # posicao_i_nome_E = [252, 309]
 # posicao_a_nome_E = posicao_i_nome_E
 
-posicao_i_cpf_S = [839, 332]
+PCx, PCy = pyautogui.locateCenterOnScreen('./image/cpf_image.png', confidence= 0.6)
+posicao_i_cpf_S = [PCx, PCy + 40]
 posicao_a_cpf_S = posicao_i_cpf_S
 
 # posicao_i_cpf_E = [590, 309]
 # posicao_a_cpf_E = posicao_i_cpf_E
 
-posicao_i_lupa = [1690, 332]
+PLx, PLy = pyautogui.locateCenterOnScreen('./image/operacoes_image.png', confidence= 0.5)
+posicao_i_lupa = [PLx + 52, PLy + 34]
 posicao_a_lupa = posicao_i_lupa
 
 #Criar pastas
