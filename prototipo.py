@@ -12,9 +12,9 @@ import win32com.client as win32
 import socket
 import requests
 
-def internet_ativa(timeout=3):
+def internet_ativa(timeout=5):
     try:
-        socket.create_connection(("8.8.8.8", 53), timeout=timeout)
+        socket.create_connection(("1.1.1.1", 443), timeout=timeout)
         return True
     except OSError:
         return False
@@ -89,7 +89,6 @@ pyautogui.FAILSAFE = True
 
 data_atual = datetime.today()
 
-
 dia = data_atual.strftime("%d")
 mes = data_atual.month
 ano = data_atual.strftime("%Y")
@@ -130,7 +129,8 @@ time.sleep(0.5)
 #POSIÇÕES
 #POSICAO INICIAL LINHA SIGAMA = 336
 
-posicao_i_nome_S = [77, 332]
+PNx, PNy = pyautogui.locateCenterOnScreen('./image/nome_image.png', confidence= 0.6)
+posicao_i_nome_S = [PNx, PNy + 40]
 posicao_a_nome_S = posicao_i_nome_S
 
 # posicao_i_nome_E = [252, 309]
@@ -181,7 +181,6 @@ for j in range(num):
     pyautogui.hotkey('ctrl', 'c')
     time.sleep(0.5)
 
-    # --------- USANDO EXCEL ---------------
     arquivo = Path("Z:/SIGAMA/Documentos Solicitaçoes de Acesso",str(ano), str(mes_nome), str(dia), "Controle de Solicitação.xlsx")
     coluna = 'A'  # coluna desejada
     nome = pyperclip.paste()
@@ -206,7 +205,8 @@ for j in range(num):
     pyautogui.doubleClick()
     pyautogui.hotkey('ctrl', 'c')
     cpf = pyperclip.paste()
-    # #cola cpf no excel
+
+    #cola cpf no excel
     coluna = 'B'
 
     # escreve o cpf
@@ -234,6 +234,7 @@ for j in range(num):
         sys.exit()
 
     time.sleep(0.2)
+
     #Localizar anexo de documentos
     pyautogui.moveTo(pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8))
     x1, y1 = pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8)
@@ -269,6 +270,9 @@ for j in range(num):
                 if agora - data_arquivo < timedelta(seconds=15):
                     time.sleep(0.2)
                     shutil.move(arquivo, destino / arquivo.name)
+            else:
+                print("Erro no download")
+                sys.exit()
 
     #iteração das posições
     posicao_a_nome_S[1] = posicao_a_nome_S[1] + 40
