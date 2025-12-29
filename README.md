@@ -75,8 +75,8 @@ O projeto é voltado para **Windows**, com uso intensivo de automação de inter
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/MarciohfCito/Automacao
+cd Automacao
 ```
 
 Instale as dependências:
@@ -89,7 +89,7 @@ pip install pyautogui pyperclip openpyxl pandas requests pywin32
 
 ## Estrutura do repositório
 
-O script cria automaticamente a seguinte estrutura:
+O script cria automaticamente a seguinte estrutura no servidor:
 
 ```
 Z:\SIGAMA\Documentos Solicitaçoes de Acesso\
