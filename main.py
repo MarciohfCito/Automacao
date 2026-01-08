@@ -9,6 +9,7 @@ import pandas as pd
 import shutil
 import os
 import sys
+from tkinter import simpledialog, Tk
 
 #Importando utilitários
 from utils.connection import checar_conectividade
@@ -23,6 +24,12 @@ if status != "OK":
 validate_excel()
 
 TIMEOUT = 60
+
+def resource_path(relative_path):
+    """ Retorna o caminho correto para PyInstaller ou execução normal """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 files_directory = Path.home() / "Downloads"
 
@@ -70,10 +77,19 @@ mes_nome = meses[mes]
 
 print(dia, mes_nome, ano)
 
-fechar_excel_se_aberto()
-
 #inserir o numero de registros
-num = int(input("Digite o número de registros: "))
+
+root = Tk()
+root.withdraw()
+
+num = simpledialog.askinteger(
+    "SIGAMA",
+    "Digite o número de registros:"
+)
+
+if num is None:
+    sys.exit()
+#num = int(input("Digite o número de registros: "))
 
 def minimizar():
     pyautogui.moveTo(pyautogui.moveTo(x=1806, y=7))
@@ -81,27 +97,32 @@ def minimizar():
     time.sleep(0.5)
 
 #minimizar vscode
-minimizar()
-time.sleep(0.5)
+#minimizar()
+#time.sleep(0.5)
 
 #POSIÇÕES
 #POSICAO INICIAL LINHA SIGAMA = 336
 
-PNx, PNy = pyautogui.locateCenterOnScreen('./image/nome_image.png', confidence= 0.6)
+img_nome = resource_path("image/nome_image.jpg")
+
+PNx, PNy = pyautogui.locateCenterOnScreen(img_nome, confidence= 0.6)
 posicao_i_nome_S = [PNx, PNy + 40]
 posicao_a_nome_S = posicao_i_nome_S
 
 # posicao_i_nome_E = [252, 309]
 # posicao_a_nome_E = posicao_i_nome_E
 
-PCx, PCy = pyautogui.locateCenterOnScreen('./image/cpf_image.png', confidence= 0.6)
+img_cpf = resource_path("image/cpf_image.jpg")
+
+PCx, PCy = pyautogui.locateCenterOnScreen(img_cpf, confidence= 0.6)
 posicao_i_cpf_S = [PCx, PCy + 40]
 posicao_a_cpf_S = posicao_i_cpf_S
 
 # posicao_i_cpf_E = [590, 309]
 # posicao_a_cpf_E = posicao_i_cpf_E
 
-PLx, PLy = pyautogui.locateCenterOnScreen('./image/operacoes_image.png', confidence= 0.5)
+img_operacoes = resource_path("image/operacoes_image.jpeg")
+PLx, PLy = pyautogui.locateCenterOnScreen(img_operacoes, confidence= 0.5)
 posicao_i_lupa = [PLx + 52, PLy + 34]
 posicao_a_lupa = posicao_i_lupa
 
@@ -124,14 +145,11 @@ else:
 
 for j in range(num):
 
-    if not internet_ativa():
-        print("Internet indisponível")
-        sys.exit()
+    status = checar_conectividade()
 
-    if not sigama_online():
-        print("SIGAMA fora do ar ou lento")
+    if status != "OK":
+        print(f"Problema de conexão: {status}")
         sys.exit()
-        # tenta novamente ou encerra
 
     #copiar nome - SIGAMA
     pyautogui.moveTo(posicao_a_nome_S)
@@ -194,8 +212,9 @@ for j in range(num):
     time.sleep(0.2)
 
     #Localizar anexo de documentos
-    pyautogui.moveTo(pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8))
-    x1, y1 = pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8)
+    img_anexo = resource_path("image/anexo_image.jpg")
+    pyautogui.moveTo(pyautogui.locateCenterOnScreen(img_anexo, confidence = 0.8))
+    x1, y1 = pyautogui.locateCenterOnScreen(img_anexo, confidence = 0.8)
     x1 = x1 - 25
 
     #clicar nos documentos
@@ -207,7 +226,9 @@ for j in range(num):
         pyautogui.click()
         time.sleep(0.2)
     time.sleep(0.2)
-    pyautogui.click(pyautogui.locateCenterOnScreen('./image/X_image.png', confidence = 0.8))
+    
+    img_X = resource_path("image/X_image.jpg")
+    pyautogui.click(pyautogui.locateCenterOnScreen(img_X, confidence = 0.8))
 
     #Colocar documentos na pasta
     destino = Path("Z:/SIGAMA/Documentos Solicitaçoes de Acesso",
