@@ -13,9 +13,9 @@ import sys
 #Importando utilitários
 from utils.connection import checar_conectividade
 from utils.input import input_numres
-from utils.validate import validate_status, validate_resolution, validate_excel, validate_folders, validate_download, validate_input, validate_vscode, validade_date, validate_position, validate_click
+from utils.validate import validate_status, validate_resolution, validate_excel, validate_folders, validate_downloads_folder, validate_input, validate_vscode, validade_date, validate_position, validate_click
 from utils.filesystem import create_directory, copy_excel_file
-from utils.position import get_name_positions, get_cpf_positions, get_lupa_position
+from utils.position import get_name_positions, get_cpf_positions, get_lupa_position, get_docs_position, get_documents
 
 #Importando configurações
 from config.settings import DOCUMENTOS_DIR, CONTROLE_EXCEL, DOWNLOADS_DIR
@@ -123,39 +123,10 @@ for j in range(int(num)):
     time.sleep(0.2)
 
     #Localizar anexo de documentos
-    pyautogui.moveTo(pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8))
-    x1, y1 = pyautogui.locateCenterOnScreen('./image/anexo_image.png', confidence = 0.8)
-    x1 = x1 - 25
+    x1, y1 = get_docs_position()
 
     #clicar nos documentos
-    pyautogui.moveTo(x1, y1+27)
-    for i in range(5):
-        y1 = y1+23
-        pyautogui.moveTo(x1, y1)
-        time.sleep(0.5)
-        pyautogui.click()
-        time.sleep(0.2)
-    #validate_download(files_directory)
-    time.sleep(0.2)
-    pyautogui.click(pyautogui.locateCenterOnScreen('./image/X_image.png', confidence = 0.8))
-
-    #Colocar documentos na pasta
-    destino = Path(DOCUMENTOS_DIR, str(ano), str(mes), str(dia), nome_cpf_tratado)
-    
-    hoje = date.today()
-    agora = datetime.now()
-
-    #identificar erro no diretório de arquivos
-    for arquivo in files_directory.iterdir():
-        if arquivo.is_file():
-            if arquivo.suffix != '.crdownload':
-                data_arquivo = datetime.fromtimestamp(arquivo.stat().st_mtime)
-                if agora - data_arquivo < timedelta(seconds=15):
-                    time.sleep(0.2)
-                    shutil.move(arquivo, destino / arquivo.name)
-            else:
-                print("Erro no download")
-                sys.exit()
+    get_documents(x1, y1, files_directory, DOCUMENTOS_DIR, ano, mes, dia, nome_cpf_tratado)
 
     #iteração das posições
     position_name[1] = position_name[1] + 40

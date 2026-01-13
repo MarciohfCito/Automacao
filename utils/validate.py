@@ -40,7 +40,7 @@ def validate_folders(folder): #Valida a existência das pastas chamadas
     else:
         print(f"Pasta {folder} não encontrada")
 
-def validate_download(files_directory, timeout=60): #Valida o download e aguarda um tempo padrão para iniciar o carregamento
+def validate_downloads_folder(files_directory, timeout=60): #Valida o download e aguarda um tempo padrão para iniciar o carregamento
     inicio = time.time()
     arquivos_iniciais = set(os.listdir(files_directory))
 
@@ -54,6 +54,18 @@ def validate_download(files_directory, timeout=60): #Valida o download e aguarda
         
         if time.time() - inicio > timeout:
             raise TimeoutError('Nenhum download detectado')
+
+def validate_download(files_directory, agora, destino):
+    for arquivo in files_directory.iterdir():
+        if arquivo.is_file():
+            if arquivo.suffix != '.crdownload':
+                data_arquivo = datetime.fromtimestamp(arquivo.stat().st_mtime)
+                if agora - data_arquivo < timedelta(seconds=15):
+                    time.sleep(0.2)
+                    shutil.move(arquivo, destino / arquivo.name)
+            else:
+                print("Erro no download")
+                sys.exit()
 
 def validade_date(): #Valida a data para a automação
     data_atual = datetime.today()
@@ -118,5 +130,3 @@ def validate_position(position, clicks):
         output = pyperclip.paste()
         
         return output
-    # else:
-    #     continue
