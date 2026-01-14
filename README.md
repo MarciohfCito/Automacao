@@ -11,7 +11,7 @@ A aplicação automatiza interações gráficas com o navegador e o Excel para:
 * Realizar o download e organização dos documentos anexados a cada solicitação
 * Garantir consistência operacional por meio de validações de conectividade e estado do ambiente
 
-O projeto é voltado para **Windows**, com uso intensivo de automação de interface gráfica (RPA).
+O projeto é voltado para **Windows** e testado no **Google Chrome**, com uso intensivo de automação de interface gráfica (RPA).
 
 ---
 
@@ -75,8 +75,8 @@ O projeto é voltado para **Windows**, com uso intensivo de automação de inter
 Clone o repositório:
 
 ```bash
-git clone https://github.com/MarciohfCito/Automacao
-cd Automacao
+git clone https://github.com/MarciohfCito/sigama-process-automation
+cd sigama-process-automation
 ```
 
 Instale as dependências:
@@ -196,6 +196,7 @@ A automação assume que:
 * Não usar o computador durante a execução
 * Garantir conexão estável com a internet
 * Não mover janelas durante a automação
+* Manter ampliação do navegador em 100%(Padrão)
 * Manter o navegador em tela cheia ou layout conhecido
 
 ---
