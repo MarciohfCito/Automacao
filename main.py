@@ -20,9 +20,12 @@ from utils.position import get_name_positions, get_cpf_positions, get_lupa_posit
 #Importando configurações
 from config.settings import DOCUMENTOS_DIR, CONTROLE_EXCEL, DOWNLOADS_DIR
 
-# status = checar_conectividade()
+#Importando controle
+from control import check_pause
 
-# validate_status(status)
+status = checar_conectividade()
+
+validate_status(status)
 
 validate_resolution()
 
@@ -55,7 +58,7 @@ def main(num):
 
     print(">>> main() iniciou <<<")
     print("Número recebido:", num)
-
+    
     pyautogui.FAILSAFE = True
     position_name = get_name_positions()
 
@@ -74,9 +77,11 @@ def main(num):
 
     for j in range(int(num)):
 
-        # status = checar_conectividade()
+        status = checar_conectividade()
 
-        # validate_status(status)
+        validate_status(status)
+
+        check_pause()
 
         #copiar nome - SIGAMA
         arquivo = Path(DOCUMENTOS_DIR, str(ano), str(mes), str(dia), "Controle de Solicitação.xlsx")
