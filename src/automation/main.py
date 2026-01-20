@@ -52,7 +52,7 @@ try:
             print(f"Erro: {e}")
 
     #minimizar vscode
-    validate_vscode()
+    #validate_vscode()
 
     controller.checkpoint("inicio_pipeline")
 

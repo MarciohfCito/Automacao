@@ -14,7 +14,7 @@ from automation.utils.position import get_name_positions, get_cpf_positions, get
 from automation.core.controller import RunController, StopRequested
 
 #Importando configurações
-from automation.config.settings import DOCUMENTOS_DIR, CONTROLE_EXCEL, DOWNLOADS_DIR
+from automation.config.settings import DOCUMENTOS_DIR, CONTROLE_EXCEL, DOWNLOADS_DIR, IMAGE_DIR
 
 def run_pipeline(controller: RunController, num_registros: int):
     
@@ -28,6 +28,8 @@ def run_pipeline(controller: RunController, num_registros: int):
 
         files_directory = DOWNLOADS_DIR
 
+        images_directory = IMAGE_DIR
+
         #Verificando pasta downloads
         validate_folders(files_directory)
 
@@ -39,16 +41,13 @@ def run_pipeline(controller: RunController, num_registros: int):
 
         validate_excel()
 
-        #minimizar vscode
-        validate_vscode()
-
         controller.checkpoint("inicio_pipeline")
 
-        position_name = get_name_positions()
+        position_name = get_name_positions(images_directory)
 
-        position_cpf = get_cpf_positions()
+        position_cpf = get_cpf_positions(images_directory)
 
-        position_lupa = get_lupa_position()
+        position_lupa = get_lupa_position(images_directory)
 
         #Verificando pasta documentos
         validate_folders(DOCUMENTOS_DIR)
@@ -121,11 +120,11 @@ def run_pipeline(controller: RunController, num_registros: int):
 
             #Localizar anexo de documentos
             controller.checkpoint("antes_docs_pos")
-            x1, y1 = get_docs_position()
+            x1, y1 = get_docs_position(images_directory)
 
             #clicar nos documentos
             controller.checkpoint("antes_baixar_docs")
-            get_documents(x1, y1, files_directory, DOCUMENTOS_DIR, ano, mes, dia, nome_cpf_tratado, controller=controller)
+            get_documents(x1, y1, files_directory, DOCUMENTOS_DIR, ano, mes, dia, nome_cpf_tratado, images_directory)
 
             #iteração das posições
             position_name[1] = position_name[1] + 40
