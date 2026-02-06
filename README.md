@@ -224,7 +224,7 @@ python app.py
 
 Aplicação funcionando:
 
-
+![Aplicação funcionando](/image.png)
 
 Durante a execução, o sistema solicitará:
 
@@ -240,7 +240,7 @@ A automação assume que:
 * A tela inicial está posicionada corretamente
 * O primeiro registro visível corresponde ao primeiro processamento
 
-Caso ocorra algum problema ajuste o ambiente de funcionamento de acordo com o log de erro explicitado, caso 
+Caso ocorra algum problema ajuste o ambiente de funcionamento de acordo com o log de erro explicitado, caso não consiga resolver sinta-se livre para contar Enzo Maldinni.
 
 ---
 
